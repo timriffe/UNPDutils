@@ -1,0 +1,36 @@
+---
+title: "Use git"
+author: "Tim Riffe"
+date: "8/26/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Fork, then clone
+
+I'm going to push my version of `UNPDutils` to `github` using a package called `usethis`, which takes some of the manual steps out of the process. There's one little step you'd need to do if you wanted to do the same thing (see next section). Once pushed to github, I'll talk you through forking. You'll abandon the UNPDutils projcet from yesterday and start a new one by cloning your forked repository. You'll see how to use commits, how to push to your forked remote, how to sync your fork with the original repository. This will probably require some diagrams on the whiteboard.
+
+
+# Steps to for moving a repository to github
+
+1. Get a github user account
+2. Open our R package project.
+3. Then follow these steps
+```{r, eval = FALSE}
+library(usethis)
+browse_github_token()
+```
+This opens a webpage, with some items checked off. Click `generate PAT`, copy it. Then in `R`:
+```{r, eval = FALSE}
+edit_r_environ()
+```
+This opens an otherwise hard-to-find file that controls some things about your `R` sessions. Add a line to it:
+```{r, eval = FALSE}
+GITHUB_PAT = "bla_bla_bla_BIG_huge_PAT_key"
+```
+Then save and restart `R`.
+
+This will mostly be for if you want to use `usethis::use_github()` to push a local repository to `github`.
