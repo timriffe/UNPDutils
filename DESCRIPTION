@@ -1,7 +1,7 @@
 Package: UNPDutils
 Type: Package
 Title: Useful items for UNPD productivity
-Version: 0.1.0
+Version: 0.1.1
 Author: Tim Riffe
 Maintainer: Tim Riffe <tim.riffe@gmail.com>
 Description: Assorted data objects and helper functions for data processing at the UN Population Division.
