@@ -34,9 +34,14 @@ library(UNPDutils)
 ?ISOSDG
 
 library(usethis)
-?use_git_config
-?use_github
+use_git_config(user.name = "Tim Riffe",
+               user.email = "tim.riffe@gmail.com")
+
+
 github_token()
 usethis::browse_github_token()
+
 ?browse_github_token
 edit_r_environ()
+
+use_github()
