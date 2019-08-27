@@ -44,4 +44,3 @@ usethis::browse_github_token()
 ?browse_github_token
 edit_r_environ()
 
-use_github()

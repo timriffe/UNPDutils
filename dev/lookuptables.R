@@ -36,6 +36,20 @@
  library(devtools)
  use_data(ISOSDG, overwrite = TRUE)
 
+### make a little lookup table
+
+ unique(DB$LocTypeName)
+
+ISOtable <- DB %>%
+    mutate(ISO = as.integer(LocID),
+           ISOlabel = Location) %>%
+    select(ISOlabel, ISO, LocTypeName) %>%
+    filter(!is.na(ISOlabel),
+           !is.na(ISO),
+           !is.na(LocTypeName))
+library(devtools)
+use_data(ISOtable, overwrite = TRUE)
+
 
 
 
