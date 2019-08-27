@@ -13,6 +13,21 @@ knitr::opts_chunk$set(echo = TRUE)
 
 I'm going to push my version of `UNPDutils` to `github` using a package called `usethis`, which takes some of the manual steps out of the process. There's one little step you'd need to do if you wanted to do the same thing (see next section). Once pushed to github, I'll talk you through forking. You'll abandon the UNPDutils projcet from yesterday and start a new one by cloning your forked repository. You'll see how to use commits, how to push to your forked remote, how to sync your fork with the original repository. This will probably require some diagrams on the whiteboard.
 
+# clone your forked repository
+To get a local copy of your forked repository, in `github` click on the green button labelled `clone or download repository`, and copy the url there. Then, in RStudio, select `new project` - `version control` - `git`, and then paste the url into the top box (you may want to change the directory where will live). 
+
+# give git your username and email
+Before you can make commits you'll need to tell `git` your `github` username and email. From `R`, this will do it:
+```{r}
+library(usethis)
+use_git_config(user.name = "Tim Riffe",
+               user.email = "tim.riffe@gmail.com")
+```
+
+
+# sync with `origincentral`
+
+In our remote
 
 # Steps to for moving a repository to github
 
