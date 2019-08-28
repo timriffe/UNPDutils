@@ -15,4 +15,8 @@
 #' }
 #' @source
 #' \url{https://population.un.org/wpp/Download/Metadata/Documentation/}
+#' @examples
+#' \dontrun{
+#' # Code that won't get executed, but it will be shown
+#' }
 "ISOtable"

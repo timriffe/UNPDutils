@@ -9,43 +9,153 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-# Fork, then clone
+I used the following articles as a crutch when designing this exercise:
 
-I'm going to push my version of `UNPDutils` to `github` using a package called `usethis`, which takes some of the manual steps out of the process. There's one little step you'd need to do if you wanted to do the same thing (see next section). Once pushed to github, I'll talk you through forking. You'll abandon the UNPDutils projcet from yesterday and start a new one by cloning your forked repository. You'll see how to use commits, how to push to your forked remote, how to sync your fork with the original repository. This will probably require some diagrams on the whiteboard.
+[https://happygitwithr.com/](https://happygitwithr.com/)
 
-# clone your forked repository
-To get a local copy of your forked repository, in `github` click on the green button labelled `clone or download repository`, and copy the url there. Then, in RStudio, select `new project` - `version control` - `git`, and then paste the url into the top box (you may want to change the directory where will live). 
+[https://usethis.r-lib.org/articles/articles/usethis-setup.html](https://usethis.r-lib.org/articles/articles/usethis-setup.html)
 
-# give git your username and email
-Before you can make commits you'll need to tell `git` your `github` username and email. From `R`, this will do it:
-```{r}
+# Why use git?
+git is a version control system. If you're working on a technical project
+
+# Fork a repository
+
+I'm going to push my version of `UNPDutils` to `github` using a package called `usethis`, which takes some of the manual steps out of the process. I've added a section at the end of this tutorial so you know how I did it. From here on out, we'll work in a distributed way. First you'll need to fork my repository. 
+
+Visit it in your browser, going to:
+
+`https://github.com/timriffe/UNPDutils`
+
+Forking means you get a copy of it under your user account. The fact that your copy *came from* mine is registered also. To do this, in the upper right corner on `github` click `fork`. Now your browser will take you to the same page, but you'll see the url has changed to reflect your user account.
+
+# Clone your forked repository
+To get a local copy of your forked repository, in `github` click on the green button labelled `clone or download repository`, and copy the url listed there. Then, in RStudio, select `new project` - `version control` - `git`, and then paste the url into the top box (you may want to change the directory where the repository will live). Click `Create repository`. The files will download and the project will open in `RStudio`.
+
+# Make some changes
+Now you can work all you like in the repository. Save your changes in the usual way. In class we did simple thing like making data objects for the package, which took a few steps (create the data, add it to the package using `devtools::use_data()`, then document it following the pattern from `ISOSDG`, then run `devtools::document()`, then `devtools::check()`).
+
+When you're satisfied, and the changes made to the repository can be described in a meaningful way, then you'll want to commit them. In the upper right corner, you'll see a tab called `git`, and any files with saved changes will appear there. But you can't commit them quite yet. First do this:
+
+# Give git your username and email
+Before you can make commits you'll need to tell `git` your `github` username and email. From `R`, this will do it (just use your name and email instead of mine):
+```{r, eval = FALSE}
 library(usethis)
 use_git_config(user.name = "Tim Riffe",
                user.email = "tim.riffe@gmail.com")
 ```
+Now while we're at it, before committing things, run this line of code to play it safe:
+```{r, eval = FALSE}
+git_vaccinate()
+```
+It'll make sure you don't commit certain things accidentally, like your `R` session, which might contain credentials or junk.
 
+# Now commit
+To commit files, select the ones you want to commit in the git panel by checking the boxes. If you want a file ignored (large data, data that may change a lot, credentials, embarassing test code, pdfs of manuscripts or reports, etc.), then right click its box and select `ignore`. If you're ignoring any files then. You can also commit the `.gitignore` file. When you're done selecting the files to commit, press `commit`. A dialogue opens, and in the upper right corner box you should enter a meaningful but minimalist message describing the changes you made to the repository. Then press the `commit` button in the dialogue. You've now made a local commit! You have history!
 
-# sync with `origincentral`
+# Double check that your github repository is registered.
 
-In our remote
+Before pushing your super clean and up-to-date local repository to github for the first time, let's double check that it is registered in `git` as the remote. To do this, open a terminal. In Rstudio, you can click `tools` - `terminal` - `new terminal`, and a terminal instance will open in the lower left panel (the same place where the `R` console is usually- you can tab between them). In the terminal, type:
+`git remote -v`, and it will list all of the remotes you have. At present, there will just be one, hopefully your own: On my machine I see:
 
-# Steps to for moving a repository to github
+`$ git remote -v`
 
-1. Get a github user account
-2. Open our R package project.
-3. Then follow these steps
+`origin  https://github.com/timriffe/UNPDutils.git (fetch)`
+
+You should see something that looks like this, except instead of `timriffe` it shows your `github` username. 
+But perhaps you accidentally cloned my repository instead? If this is the case, then let's fix that. Remotes have code names. The one you cloned from is called `origin`. How about you keep my repository as a remote, but we change its name to `origincentral`. Then type:
+
+`git remote rename origin origincentral`
+
+`origin  https://github.com/timriffe/UNPDutils.git (push)`
+
+Now add your own repository as a new remote called `origin`:
+
+`git remote add origin https://github.com/yourusername/UNPDutils.git`
+
+Now if you type `git remote -v` you'll see a push a pull url for each repository. 
+
+# Push to your forked repository on `github`
+Now, either in the dialogue still (you may have closed it) or in the git tab, you'll see a button that is a green arrow pointing up. Click that. You'll be asked for your credentials. When you give them, then your changes will go to *your* remote repository on `github`. 
+
+# Now make a pull request
+When you've made a meaningful change in your fork, then eventually it will make sense to merge these changes into the central repository (the one you forked from) by making a *pull request*. This is a two-sided transaction, involving you and whoever manages the central repository (in this case me). When you're ready for this, go to the `github` site for your repo and press the `new pull request` button. It's a user-friendly dialogue process. Include a message describing your changes. `github` will tell us whether the changes imply a conflict between the repositories, but don't worry about that (it might be intentional!). Submit the request, then I'll merge it in (or else I'll leave leave comments that you'll see). Pull requests tend to trigger emails from github, which is nice IMO (you can also turn them off). 
+
+# The state of `origincentral`
+In a team various people could be contributing to the central *canonical* repository. In that case, you'll probably want to sync up after your pull request is merged in. At this time, you may already have the central repository registered as a remote called `origincentral`. Check once again, typing `git remote -v` to verify `origincentral` appears and lists my repo. If not, then add it using:
+
+`git remote add origincentral https://github.com/timriffe/UNPDutils.git`
+
+# Sync with `origincentral`
+
+Now you can fetch changes from the central repository to your local machine using:
+
+`git fetch origincentral/master`
+
+The differences will be grabbed, but not yet merged in to your local repo You'll have two branches in your local repo: `master` and `origincentral/master`. You can switch branches using the `checkout` command in git. We'll need to hop to the newly fetched branch and then hop back to `master` before we can merge (probably, at least this was the hack we used in class that worked).
+
+`git checkout origincentral/master`
+
+`git checkout origin/master`
+
+Then merge them together from the *destination* branch.
+
+`git merge origincentral/master`
+
+Now you are synced.
+
+# Branching
+You saw in the `fetch-merge` operation above that we were already using the concept of branches. For you, your immediate reference is always `origin`, and in `origin` so far you only have one branch, `master`. Likewise, `remotecentral` has a branch called `master`. It's possible, but considered best practices to always work on the master branch. It becomes annoying to work on the master branch the more moving parts there are in a project. Instead, it's safer to work on branches until a task is complete and then merge them back into your master. You can give your branches meaningful names, or even simple letters. To make a new branch called `B` typein ther terminal.
+
+`git branch B`
+
+To move to it, type:
+
+`git checkout B`
+
+Now make a change to a file. Write some line in the text editor in any file. Now type:
+
+`git checkout master`
+
+and you'll see that line disappear. This is a micro version of what you can do with branches: there can be whole files that are created in a branch, and many files might differ. Typically one works on a branch until a task is complete and the result appears stable. When ready, you merge back to your `master`, like this:
+
+`git checkout master`
+
+`git merge B`
+
+If there are no conflicts, this will work without hassel, but if there are, then you'll need to make edits until the the conflicts are gone, then commit. There is no need to delete the `B` branch when you are done with it, but you may wish to do so:
+
+`git branch B -d`
+
+For your changes to escalate, you'll need to pusk them to your fork, then make a pull request, as described above.
+
+# Move a repository to github from `R`
+
+Say you have some other repository on your local machine that you'd like to host on github. Yes, there's an `R` function for that, which takes some initial configuration.
+
+First, get a PAT token. This function will take you to your github `settings/tokens` page, with some items checked off.
 ```{r, eval = FALSE}
 library(usethis)
 browse_github_token()
 ```
-This opens a webpage, with some items checked off. Click `generate PAT`, copy it. Then in `R`:
+Click `generate PAT`, copy it. Then in `R`:
 ```{r, eval = FALSE}
 edit_r_environ()
 ```
 This opens an otherwise hard-to-find file that controls some things about your `R` sessions. Add a line to it:
 ```{r, eval = FALSE}
 GITHUB_PAT = "bla_bla_bla_BIG_huge_PAT_key"
-```
-Then save and restart `R`.
 
-This will mostly be for if you want to use `usethis::use_github()` to push a local repository to `github`.
+```
+Include the line break! Then save and restart `R`.
+
+Now you can push your local repository to `github` using:
+
+```{r, eval = FALSE}
+library(usethis)
+use_github()
+```
+
+When you do so, the new repository will automatically be listed as the remote, and you can follow a workflow like that described above.
+
+# Or do it manually:
+If the `PAT` trick is too much a pain, you can always create the repository by going to github, and clicking `+` and selecting `New repository`. Give it the same name you're already working with. Then copy-paste the clone url, and add it as a remote as described above. Then you'll be able to push to it,a s the case may be.

@@ -370,20 +370,31 @@ summary {
 </div>
 
 
-<div id="fork-then-clone" class="section level1">
-<h1>Fork, then clone</h1>
-<p>I’m going to push my version of <code>UNPDutils</code> to <code>github</code> using a package called <code>usethis</code>, which takes some of the manual steps out of the process. There’s one little step you’d need to do if you wanted to do the same thing (see next section). Once pushed to github, I’ll talk you through forking. You’ll abandon the UNPDutils projcet from yesterday and start a new one by cloning your forked repository. You’ll see how to use commits, how to push to your forked remote, how to sync your fork with the original repository. This will probably require some diagrams on the whiteboard.</p>
+<p>I used the following articles as a crutch when designing this exercise:</p>
+<p><a href="https://happygitwithr.com/">https://happygitwithr.com/</a></p>
+<p><a href="https://usethis.r-lib.org/articles/articles/usethis-setup.html">https://usethis.r-lib.org/articles/articles/usethis-setup.html</a></p>
+<div id="why-use-git" class="section level1">
+<h1>Why use git?</h1>
+<p>git is a version control system. If you’re working on a technical project</p>
+</div>
+<div id="fork-a-repository" class="section level1">
+<h1>Fork a repository</h1>
+<p>I’m going to push my version of <code>UNPDutils</code> to <code>github</code> using a package called <code>usethis</code>, which takes some of the manual steps out of the process. I’ve added a section at the end of this tutorial so you know how I did it. From here on out, we’ll work in a distributed way. First you’ll need to fork my repository.</p>
+<p>Visit it in your browser, going to:</p>
+<p><code>https://github.com/timriffe/UNPDutils</code></p>
+<p>Forking means you get a copy of it under your user account. The fact that your copy <em>came from</em> mine is registered also. To do this, in the upper right corner on <code>github</code> click <code>fork</code>. Now your browser will take you to the same page, but you’ll see the url has changed to reflect your user account.</p>
 </div>
 <div id="clone-your-forked-repository" class="section level1">
-<h1>clone your forked repository</h1>
-<p>To get a local copy of your forked repository, in <code>github</code> click on the green button labelled <code>clone or download repository</code>, and copy the url there. Then, in RStudio, select <code>new project</code> - <code>version control</code> - <code>git</code>, and then paste the url into the top box (you may want to change the directory where the repository will live). Click <code>Create repository</code>. The files will download and the project will open in RStudio.</p>
+<h1>Clone your forked repository</h1>
+<p>To get a local copy of your forked repository, in <code>github</code> click on the green button labelled <code>clone or download repository</code>, and copy the url listed there. Then, in RStudio, select <code>new project</code> - <code>version control</code> - <code>git</code>, and then paste the url into the top box (you may want to change the directory where the repository will live). Click <code>Create repository</code>. The files will download and the project will open in <code>RStudio</code>.</p>
 </div>
 <div id="make-some-changes" class="section level1">
-<h1>make some changes</h1>
-<p>Now you can work all you like in the repository. Save your changes in the usual way. When you’re satisfied, and the changes made to the repository can be described in a meaningful way, then you’ll want to commit them. In the upper right corner, you’ll see a tab called <code>git</code>, and any files with saved changes will appear there. But you can’t commit them quite yet. First do this:</p>
+<h1>Make some changes</h1>
+<p>Now you can work all you like in the repository. Save your changes in the usual way. In class we did simple thing like making data objects for the package, which took a few steps (create the data, add it to the package using <code>devtools::use_data()</code>, then document it following the pattern from <code>ISOSDG</code>, then run <code>devtools::document()</code>, then <code>devtools::check()</code>).</p>
+<p>When you’re satisfied, and the changes made to the repository can be described in a meaningful way, then you’ll want to commit them. In the upper right corner, you’ll see a tab called <code>git</code>, and any files with saved changes will appear there. But you can’t commit them quite yet. First do this:</p>
 </div>
 <div id="give-git-your-username-and-email" class="section level1">
-<h1>give git your username and email</h1>
+<h1>Give git your username and email</h1>
 <p>Before you can make commits you’ll need to tell <code>git</code> your <code>github</code> username and email. From <code>R</code>, this will do it (just use your name and email instead of mine):</p>
 <pre class="r"><code>library(usethis)
 use_git_config(user.name = &quot;Tim Riffe&quot;,
@@ -393,39 +404,79 @@ use_git_config(user.name = &quot;Tim Riffe&quot;,
 <p>It’ll make sure you don’t commit certain things accidentally, like your <code>R</code> session, which might contain credentials or junk.</p>
 </div>
 <div id="now-commit" class="section level1">
-<h1>now commit</h1>
+<h1>Now commit</h1>
 <p>To commit files, select the ones you want to commit in the git panel by checking the boxes. If you want a file ignored (large data, data that may change a lot, credentials, embarassing test code, pdfs of manuscripts or reports, etc.), then right click its box and select <code>ignore</code>. If you’re ignoring any files then. You can also commit the <code>.gitignore</code> file. When you’re done selecting the files to commit, press <code>commit</code>. A dialogue opens, and in the upper right corner box you should enter a meaningful but minimalist message describing the changes you made to the repository. Then press the <code>commit</code> button in the dialogue. You’ve now made a local commit! You have history!</p>
 </div>
 <div id="double-check-that-your-github-repository-is-registered." class="section level1">
-<h1>double check that your github repository is registered.</h1>
+<h1>Double check that your github repository is registered.</h1>
 <p>Before pushing your super clean and up-to-date local repository to github for the first time, let’s double check that it is registered in <code>git</code> as the remote. To do this, open a terminal. In Rstudio, you can click <code>tools</code> - <code>terminal</code> - <code>new terminal</code>, and a terminal instance will open in the lower left panel (the same place where the <code>R</code> console is usually- you can tab between them). In the terminal, type: <code>git remote -v</code>, and it will list all of the remotes you have. At present, there will just be one, hopefully your own: On my machine I see:</p>
 <p><code>$ git remote -v</code></p>
 <p><code>origin  https://github.com/timriffe/UNPDutils.git (fetch)</code></p>
+<p>You should see something that looks like this, except instead of <code>timriffe</code> it shows your <code>github</code> username. But perhaps you accidentally cloned my repository instead? If this is the case, then let’s fix that. Remotes have code names. The one you cloned from is called <code>origin</code>. How about you keep my repository as a remote, but we change its name to <code>origincentral</code>. Then type:</p>
+<p><code>git remote rename origin origincentral</code></p>
 <p><code>origin  https://github.com/timriffe/UNPDutils.git (push)</code></p>
+<p>Now add your own repository as a new remote called <code>origin</code>:</p>
+<p><code>git remote add origin https://github.com/yourusername/UNPDutils.git</code></p>
+<p>Now if you type <code>git remote -v</code> you’ll see a push a pull url for each repository.</p>
 </div>
 <div id="push-to-your-forked-repository-on-github" class="section level1">
-<h1>push to your forked repository on <code>github</code></h1>
-<p>Now, either in the dialogue still (you may have closed it) or in the git tab, you’ll see a button that is a green arrow pointing up. Click that. You’ll be asked for your credentials. When you give them, then your changes will go to <em>your</em> remote repository on <code>github</code>. It knows where to push this information was registered when you originally cloned the repository.</p>
+<h1>Push to your forked repository on <code>github</code></h1>
+<p>Now, either in the dialogue still (you may have closed it) or in the git tab, you’ll see a button that is a green arrow pointing up. Click that. You’ll be asked for your credentials. When you give them, then your changes will go to <em>your</em> remote repository on <code>github</code>.</p>
+</div>
+<div id="now-make-a-pull-request" class="section level1">
+<h1>Now make a pull request</h1>
+<p>When you’ve made a meaningful change in your fork, then eventually it will make sense to merge these changes into the central repository (the one you forked from) by making a <em>pull request</em>. This is a two-sided transaction, involving you and whoever manages the central repository (in this case me). When you’re ready for this, go to the <code>github</code> site for your repo and press the <code>new pull request</code> button. It’s a user-friendly dialogue process. Include a message describing your changes. <code>github</code> will tell us whether the changes imply a conflict between the repositories, but don’t worry about that (it might be intentional!). Submit the request, then I’ll merge it in (or else I’ll leave leave comments that you’ll see). Pull requests tend to trigger emails from github, which is nice IMO (you can also turn them off).</p>
+</div>
+<div id="the-state-of-origincentral" class="section level1">
+<h1>The state of <code>origincentral</code></h1>
+<p>In a team various people could be contributing to the central <em>canonical</em> repository. In that case, you’ll probably want to sync up after your pull request is merged in. At this time, you may already have the central repository registered as a remote called <code>origincentral</code>. Check once again, typing <code>git remote -v</code> to verify <code>origincentral</code> appears and lists my repo. If not, then add it using:</p>
+<p><code>git remote add origincentral https://github.com/timriffe/UNPDutils.git</code></p>
 </div>
 <div id="sync-with-origincentral" class="section level1">
-<h1>sync with <code>origincentral</code></h1>
-<p>In our remote</p>
+<h1>Sync with <code>origincentral</code></h1>
+<p>Now you can fetch changes from the central repository to your local machine using:</p>
+<p><code>git fetch origincentral/master</code></p>
+<p>The differences will be grabbed, but not yet merged in to your local repo You’ll have two branches in your local repo: <code>master</code> and <code>origincentral/master</code>. You can switch branches using the <code>checkout</code> command in git. We’ll need to hop to the newly fetched branch and then hop back to <code>master</code> before we can merge (probably, at least this was the hack we used in class that worked).</p>
+<p><code>git checkout origincentral/master</code></p>
+<p><code>git checkout origin/master</code></p>
+<p>Then merge them together from the <em>destination</em> branch.</p>
+<p><code>git merge origincentral/master</code></p>
+<p>Now you are synced.</p>
 </div>
-<div id="steps-to-for-moving-a-repository-to-github" class="section level1">
-<h1>Steps to for moving a repository to github</h1>
-<ol style="list-style-type: decimal">
-<li>Get a github user account</li>
-<li>Open our R package project.</li>
-<li>Then follow these steps</li>
-</ol>
+<div id="branching" class="section level1">
+<h1>Branching</h1>
+<p>You saw in the <code>fetch-merge</code> operation above that we were already using the concept of branches. For you, your immediate reference is always <code>origin</code>, and in <code>origin</code> so far you only have one branch, <code>master</code>. Likewise, <code>remotecentral</code> has a branch called <code>master</code>. It’s possible, but considered best practices to always work on the master branch. It becomes annoying to work on the master branch the more moving parts there are in a project. Instead, it’s safer to work on branches until a task is complete and then merge them back into your master. You can give your branches meaningful names, or even simple letters. To make a new branch called <code>B</code> typein ther terminal.</p>
+<p><code>git branch B</code></p>
+<p>To move to it, type:</p>
+<p><code>git checkout B</code></p>
+<p>Now make a change to a file. Write some line in the text editor in any file. Now type:</p>
+<p><code>git checkout master</code></p>
+<p>and you’ll see that line disappear. This is a micro version of what you can do with branches: there can be whole files that are created in a branch, and many files might differ. Typically one works on a branch until a task is complete and the result appears stable. When ready, you merge back to your <code>master</code>, like this:</p>
+<p><code>git checkout master</code></p>
+<p><code>git merge B</code></p>
+<p>If there are no conflicts, this will work without hassel, but if there are, then you’ll need to make edits until the the conflicts are gone, then commit. There is no need to delete the <code>B</code> branch when you are done with it, but you may wish to do so:</p>
+<p><code>git branch B -d</code></p>
+<p>For your changes to escalate, you’ll need to pusk them to your fork, then make a pull request, as described above.</p>
+</div>
+<div id="move-a-repository-to-github-from-r" class="section level1">
+<h1>Move a repository to github from <code>R</code></h1>
+<p>Say you have some other repository on your local machine that you’d like to host on github. Yes, there’s an <code>R</code> function for that, which takes some initial configuration.</p>
+<p>First, get a PAT token. This function will take you to your github <code>settings/tokens</code> page, with some items checked off.</p>
 <pre class="r"><code>library(usethis)
 browse_github_token()</code></pre>
-<p>This opens a webpage, with some items checked off. Click <code>generate PAT</code>, copy it. Then in <code>R</code>:</p>
+<p>Click <code>generate PAT</code>, copy it. Then in <code>R</code>:</p>
 <pre class="r"><code>edit_r_environ()</code></pre>
 <p>This opens an otherwise hard-to-find file that controls some things about your <code>R</code> sessions. Add a line to it:</p>
 <pre class="r"><code>GITHUB_PAT = &quot;bla_bla_bla_BIG_huge_PAT_key&quot;</code></pre>
-<p>Then save and restart <code>R</code>.</p>
-<p>This will mostly be for if you want to use <code>usethis::use_github()</code> to push a local repository to <code>github</code>.</p>
+<p>Include the line break! Then save and restart <code>R</code>.</p>
+<p>Now you can push your local repository to <code>github</code> using:</p>
+<pre class="r"><code>library(usethis)
+use_github()</code></pre>
+<p>When you do so, the new repository will automatically be listed as the remote, and you can follow a workflow like that described above.</p>
+</div>
+<div id="or-do-it-manually" class="section level1">
+<h1>Or do it manually:</h1>
+<p>If the <code>PAT</code> trick is too much a pain, you can always create the repository by going to github, and clicking <code>+</code> and selecting <code>New repository</code>. Give it the same name you’re already working with. Then copy-paste the clone url, and add it as a remote as described above. Then you’ll be able to push to it,a s the case may be.</p>
 </div>
 
 
